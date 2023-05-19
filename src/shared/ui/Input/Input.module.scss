@@ -1,0 +1,17 @@
+.wrapper {
+    width: 100%;
+}
+
+.input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--dark-grey);
+    outline: none;
+    width: 100%;
+    color: var(--primary-color);
+    padding: 5px 10px;
+
+    &.focus {
+        outline: none;
+    }
+}

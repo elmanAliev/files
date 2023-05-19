@@ -1,0 +1,16 @@
+@import "reset";
+@import "variables/global";
+
+body {
+  font: var(--font-m);
+  color: var(--dark-grey);
+}
+
+.app {
+  padding: 20px;
+  background: var(--light-grey);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

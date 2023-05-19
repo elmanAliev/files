@@ -1,0 +1,38 @@
+.button {
+    cursor: pointer;
+    color: var(--white);
+    padding: 6px 15px 8px;
+    border-radius: 8px;
+    font-weight: var(--weight-500);
+
+    &:hover {
+        opacity: 0.7;
+        fill-opacity: 70%;
+        stroke-opacity: 70%;
+    }
+}
+
+.primary {
+    border: none;
+    background: var(--blue);
+    outline: none;
+}
+
+.outline {
+    border: 1px solid var(--dark-grey);
+    color: var(--dark-grey);
+    background: none;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: auto;
+
+    &:hover {
+        opacity: 0.5;
+    }
+}
+
+.fullWidth {
+    width: 100%;
+}

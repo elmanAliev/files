@@ -1,13 +1,14 @@
-import { classNames } from "@/shared/lib/classNames/classNames";
-// import { VStack } from '@/shared/ui/Stack/VStack/VStack';
-// import { EditableProfileCard } from '@/features/editableProfileCard';
+
+import { ProfilePageHeader } from '@/widgets/ProfilePageHeader/ui/ProfilePageHeader';
+import cls from './ProfilePage.module.scss';
+import { UploadButton } from '@/features/upload';
 
 export const ProfilePage = () => {
     return (
-        <div>
-            {/* <VStack gap="16" max>
-                <EditableProfileCard id={id!} />
-            </VStack> */}
+        <div className={cls.profilePage}>
+            <ProfilePageHeader />
+            <UploadButton />
+            {/* <FilesList /> */}
         </div>
     );
 };

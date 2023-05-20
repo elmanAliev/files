@@ -1,0 +1,9 @@
+.profilePageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: var(--header-height);
+    border-bottom: 1px solid var(--grey);
+    padding: 20px;
+}

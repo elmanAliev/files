@@ -1,5 +1,6 @@
 import cls from './LoginForm.module.scss';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch/useAppDispatch';
 import { loginActions } from '../../model/slice/loginSlice';
 import { getLoginEmail, getLoginError, getLoginIsLoading, getLoginPassword } from '../../model/selectors/getLoginData';
@@ -9,6 +10,7 @@ import { Input } from '@/shared/ui/Input/Input';
 import { Text } from '@/shared/ui/Text/Text';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Loader } from '@/shared/ui/Loader/Loader';
+import { RoutePath } from '@/shared/config/routeConfig/routeConfig';
 
 export const LoginForm = () => {
     const email = useSelector(getLoginEmail);
@@ -17,6 +19,7 @@ export const LoginForm = () => {
     const error = useSelector(getLoginError);
     const disabled = !email || !password;
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const handleChangeEmail = (value: string) => {
         dispatch(loginActions.setEmail(value));
@@ -26,8 +29,11 @@ export const LoginForm = () => {
         dispatch(loginActions.setPassword(value));
     }
 
-    const handleRegister = () => {
-        dispatch(loginByUsername({email, password}));
+    const handleRegister = async () => {
+        const result = await dispatch(loginByUsername({email, password}));
+        if (result.meta.requestStatus === "fulfilled") {
+            navigate(RoutePath.profile);
+        }
     }
 
     if (isLoading) {

@@ -1,9 +1,21 @@
 import axios from "axios";
 import { USER_LOCALSTORAGE_KEY } from "@/shared/const/localstorage";
 
-export const $api = axios.create({
+const $api = axios.create({
     baseURL: "https://job.kitactive.ru/api",
-    headers: {
-        authorization: `Bearer ${localStorage.getItem(USER_LOCALSTORAGE_KEY)}` || "",
-    },
 });
+
+$api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem(USER_LOCALSTORAGE_KEY)
+        if (token) {
+            config.headers["Authorization"] = "Bearer " + token;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+export default $api; 

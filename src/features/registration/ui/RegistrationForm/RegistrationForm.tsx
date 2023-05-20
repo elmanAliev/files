@@ -11,6 +11,7 @@ import { Input } from '@/shared/ui/Input/Input';
 import { Button } from '@/shared/ui/Button/Button';
 import { Loader } from '@/shared/ui/Loader/Loader';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
+import { RoutePath } from '@/shared/config/routeConfig/routeConfig';
 
 
 export const RegistrationForm = () => {
@@ -21,7 +22,7 @@ export const RegistrationForm = () => {
     const error = useSelector(getRegisterError);
     const disabled = !name || !email || !password;
     const dispatch = useAppDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleChangeName = useCallback((value: string) => {
         dispatch(registerActions.setName(value));
@@ -39,7 +40,7 @@ export const RegistrationForm = () => {
     const handleRegister = async () => {
         const result = await dispatch(register({name, email, password}))
         if (result.meta.requestStatus === "fulfilled") {
-            navigate("/");
+            navigate(RoutePath.login);
         }
     };
 
@@ -61,7 +62,7 @@ export const RegistrationForm = () => {
             <Input
                 className={cls.input}
                 type="text"
-                placeholder="Введите логин"
+                placeholder="Введите имя"
                 onChange={handleChangeName}
                 value={name}
             />

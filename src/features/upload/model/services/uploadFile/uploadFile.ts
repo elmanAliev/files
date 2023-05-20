@@ -1,12 +1,13 @@
 import { createAsyncThunk} from "@reduxjs/toolkit";
 import { ThunkConfig } from "@/app/providers/StoreProvider/config/StateSchema";
+import { getFiles } from "@/entities/File";
 
 interface Response {
     status: string;
 }
 
 interface UploadFileProps {
-    files: FileList;
+    filesArray: FileList;
 }
 
 export const uploadFile = createAsyncThunk<
@@ -15,19 +16,27 @@ export const uploadFile = createAsyncThunk<
     ThunkConfig<string>
 >(
     "uploadButton/uploadFile",
-    async (files, thunkApi) => {
-        const { extra, rejectWithValue } = thunkApi;
+    async ({filesArray}, thunkApi) => {
+        const { dispatch, extra, rejectWithValue } = thunkApi;
 
         try {
-            const response = await extra.api.post<Response>("/media/upload", files);
+            const response = await extra.api.post<Response>("/media/upload", filesArray,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
 
             if (!response.data) {
                 throw new Error();
             }
+
+            dispatch(getFiles())
             
             return response.data;
         } catch (e) {
-            return rejectWithValue("Ошибка при регистрации");
+            return rejectWithValue("Ошибка при отправке файлов");
         }
     },
 );

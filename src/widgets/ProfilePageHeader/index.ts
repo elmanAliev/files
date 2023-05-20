@@ -1,3 +1,1 @@
-import { Navbar } from "./ui/ProfilePageHeader";
-
-export { Navbar };
+export { ProfilePageHeader } from "./ui/ProfilePageHeader";

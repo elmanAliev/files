@@ -1,11 +1,11 @@
 .uploadButton {
-    
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .input {
     display: none;
-}
-
-.button {
-    margin-top: 10px;
 }

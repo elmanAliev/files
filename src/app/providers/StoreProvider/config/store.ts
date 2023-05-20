@@ -8,6 +8,10 @@ import { userReducer } from '@/entities/User';
 import { registerReducer } from '@/features/registration';
 import { loginReducer } from '@/features/login';
 import { logoutReducer } from '@/features/logout';
+import { uploadReducer } from '@/features/upload';
+import { fileReducer } from '@/entities/File';
+import { deleteReducer } from '@/features/delete';
+import { downloadReducer } from '@/features/download';
 
 export function createReduxStore(
     initialState?: StateSchema,
@@ -16,7 +20,11 @@ export function createReduxStore(
         user: userReducer,
         login: loginReducer, 
         register: registerReducer,
-        logout: logoutReducer
+        logout: logoutReducer,
+        upload: uploadReducer,
+        delete: deleteReducer,
+        download: downloadReducer,
+        file: fileReducer,
     };
 
     const extraArg: ThunkExtraArg = {

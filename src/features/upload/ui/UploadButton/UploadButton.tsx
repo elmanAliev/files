@@ -1,41 +1,34 @@
 import cls from './UploadButton.module.scss';
 import { ChangeEvent, useRef } from "react";
-import { useSelector } from 'react-redux';
-import { useHref, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from "@/shared/hooks/useAppDispatch/useAppDispatch";
-import { getRegisterEmail, getRegisterError, getRegisterIsLoading, getRegisterName, getRegisterPassword } from '../../model/selectors/getRegisterData';
-import { uploadSlice } from "../../model/slice/uploadSlice";
 import { uploadFile } from "../../model/services/uploadFile/uploadFile";
 import { Text } from '@/shared/ui/Text/Text';
-import { Input } from '@/shared/ui/Input/Input';
 import { Button } from '@/shared/ui/Button/Button';
-import { Loader } from '@/shared/ui/Loader/Loader';
-import { AppLink } from '@/shared/ui/AppLink/AppLink';
-
 
 export const UploadButton = () => {
+    const text = `Загружено ${10} файлов`
     const fileInputRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
 
-    const handleUpload = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    // отправка файлов на сервер
+    const handleUpload = async ({ target }: ChangeEvent<HTMLInputElement>) => {
         if (target.files) {
-            dispatch(uploadFile({files: target.files}));
+            const result = await dispatch(uploadFile({filesArray: target.files}));
+
+            // очищаем input, т.к. если файл, выбранный в предыдущий раз, 
+            // идентичен файлу, выбранному в текущий раз, onChange на input не сработает
+            if (result.meta.requestStatus === "fulfilled" && fileInputRef.current) {
+                fileInputRef.current.value = '';
+            }
         }
     };
 
+    // имитируем клик на input
     const handleButtonClick = () => {
         if(fileInputRef.current) {
             fileInputRef.current.click();
         }
     };
-
-    // if (isLoading) {
-    //     return (
-    //         <div className={cls.registerForm}>
-    //             <Loader />
-    //         </div>
-    //     )
-    // }
 
     return (
         <div className={cls.uploadButton}>
@@ -45,7 +38,8 @@ export const UploadButton = () => {
                 ref={fileInputRef}
                 onChange={handleUpload}
             />
-            <Button className={cls.button} onClick={handleButtonClick}>Загрузить</Button>
+            <Button onClick={handleButtonClick}>Загрузить</Button>
+            <Text text={text} />
         </div>
     );
 };

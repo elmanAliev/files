@@ -2,7 +2,6 @@ import { RouteProps } from "react-router-dom";
 import { LoginPage } from "@/pages/LoginPage";
 import { RegisterPage } from "@/pages/RegisterPage";
 import { ProfilePage } from "@/pages/ProfilePage";
-import { ForbiddenPage } from "@/pages/ForbiddenPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 
 export type AppRoutesProps = RouteProps & {
@@ -13,7 +12,6 @@ export enum AppRoutes {
   LOGIN = "login",
   REGISTER = "register",
   PROFILE = "profile",
-  FORBIDDEN = "forbidden",
   NOT_FOUND = "not_found",
 }
 
@@ -21,7 +19,6 @@ export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.PROFILE]: "/",
     [AppRoutes.LOGIN]: "/login",
     [AppRoutes.REGISTER]: "/register",
-    [AppRoutes.FORBIDDEN]: "/forbidden",
     [AppRoutes.NOT_FOUND]: "*",
 };
 
@@ -38,10 +35,6 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
         path: RoutePath.profile,
         element: <ProfilePage />,
         authOnly: true,
-    },
-    [AppRoutes.FORBIDDEN]: {
-        path: `${RoutePath.forbidden}`,
-        element: <ForbiddenPage />,
     },
     [AppRoutes.NOT_FOUND]: {
         path: RoutePath.not_found,

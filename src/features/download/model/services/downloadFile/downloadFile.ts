@@ -15,7 +15,9 @@ export const downloadFile = createAsyncThunk<
         const file = getCurrentFile(getState());
 
         try {
-            const response = await extra.api.get<Blob>(`/media/${file?.id}`);
+            const response = await extra.api.get<Blob>(`/media/${file?.id}`, {
+                responseType: 'blob',
+            });
 
             if (!response.data) {
                 throw new Error();

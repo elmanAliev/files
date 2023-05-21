@@ -10,7 +10,7 @@ import { validateUpload } from '@/shared/helpers/validateUpload';
 
 export const UploadButton = () => {
     const allFiles = useSelector(getFilesData.selectAll);
-    const text = allFiles.length ? `Загружено ${allFiles.length} файлов` : "Нет загруженных файлов";
+    const text = allFiles.length ? `Всего файлов: ${allFiles.length}` : "Нет загруженных файлов";
     const fileInputRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
 

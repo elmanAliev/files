@@ -1,48 +1,22 @@
 import cls from './RegistrationForm.module.scss';
-import { useCallback } from "react";
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from "@/shared/hooks/useAppDispatch/useAppDispatch";
-import { getRegisterEmail, getRegisterError, getRegisterIsLoading, getRegisterName, getRegisterPassword } from '../../model/selectors/getRegisterData';
-import { registerActions } from "../../model/slice/registerSlice";
-import { register } from "../../model/services/register/register";
 import { Text } from '@/shared/ui/Text/Text';
 import { Input } from '@/shared/ui/Input/Input';
 import { Button } from '@/shared/ui/Button/Button';
 import { Loader } from '@/shared/ui/Loader/Loader';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
-import { RoutePath } from '@/shared/config/routeConfig/routeConfig';
+import { useRegistrationForm } from './useRegistrationForm';
 
 
 export const RegistrationForm = () => {
-    const name = useSelector(getRegisterName);
-    const email = useSelector(getRegisterEmail);
-    const password = useSelector(getRegisterPassword);
-    const isLoading = useSelector(getRegisterIsLoading);
-    const error = useSelector(getRegisterError);
-    const disabled = !name || !email || !password;
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
-    const handleChangeName = useCallback((value: string) => {
-        dispatch(registerActions.setName(value));
-    }, [dispatch]);
-
-    const handleChangeEmail = useCallback((value: string) => {
-        dispatch(registerActions.setEmail(value));
-    }, [dispatch]);
-
-    const handleChangePassword = useCallback((value: string) => {
-        dispatch(registerActions.setPassword(value));
-    }, [dispatch]);
-
-
-    const handleRegister = async () => {
-        const result = await dispatch(register({name, email, password}))
-        if (result.meta.requestStatus === "fulfilled") {
-            navigate(RoutePath.login);
-        }
-    };
+    const {
+        values,
+        errors,
+        touched,
+        error,
+        isLoading,
+        handleChange,
+        handleSubmit,
+    } = useRegistrationForm();
 
     if (isLoading) {
         return (
@@ -53,7 +27,7 @@ export const RegistrationForm = () => {
     }
 
     return (
-        <div className={cls.registerForm}>
+        <form onSubmit={handleSubmit} className={cls.registerForm}>
             <Text 
                 className={cls.title} 
                 title="Регистрация" 
@@ -63,22 +37,37 @@ export const RegistrationForm = () => {
                 className={cls.input}
                 type="text"
                 placeholder="Введите имя"
-                onChange={handleChangeName}
-                value={name}
+                onChange={handleChange}
+                value={values.name}
+                hasError={!!(errors.name && touched.name)}
+                touched={touched.name}
+                errorText={errors.name}
+                name="name"
+                id="name"
             />
             <Input
                 className={cls.input}
                 type="text"
                 placeholder={"Введите почту"}
-                onChange={handleChangeEmail}
-                value={email}
+                onChange={handleChange}
+                value={values.email}
+                hasError={!!(errors.email && touched.email)}
+                touched={touched.email}
+                errorText={errors.email}
+                name="email"
+                id="email"
             />
             <Input
                 className={cls.input}
-                type="text"
+                type="password"
                 placeholder={"Введите пароль"}
-                onChange={handleChangePassword}
-                value={password}
+                onChange={handleChange}
+                value={values.password}
+                hasError={!!(errors.password && touched.password)}
+                touched={touched.password}
+                errorText={errors.password}
+                name="password"
+                id="password"
             />
             {error && (
                 <Text
@@ -88,15 +77,14 @@ export const RegistrationForm = () => {
                 />
             )}
             <Button
-                onClick={handleRegister}
+                type="submit"
                 className={cls.loginBtn}
-                disabled={disabled}
             >
                 Зарегистрироваться
             </Button>
             <div className={cls.link}>
                 Уже зарегестрированы? <AppLink to={"/"}>Перейти к авторизации</AppLink>
             </div>
-        </div>
+        </form>
     );
 };

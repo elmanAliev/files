@@ -1,40 +1,22 @@
 import cls from './LoginForm.module.scss';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '@/shared/hooks/useAppDispatch/useAppDispatch';
-import { loginActions } from '../../model/slice/loginSlice';
-import { getLoginEmail, getLoginError, getLoginIsLoading, getLoginPassword } from '../../model/selectors/getLoginData';
-import { loginByUsername } from '../../model/services/loginByUsername/loginByUsername';
 import { Button } from '@/shared/ui/Button/Button';
 import { Input } from '@/shared/ui/Input/Input';
 import { Text } from '@/shared/ui/Text/Text';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Loader } from '@/shared/ui/Loader/Loader';
 import { RoutePath } from '@/shared/config/routeConfig/routeConfig';
+import { useLoginForm } from './useLoginForm';
 
 export const LoginForm = () => {
-    const email = useSelector(getLoginEmail);
-    const password = useSelector(getLoginPassword);
-    const isLoading = useSelector(getLoginIsLoading);
-    const error = useSelector(getLoginError);
-    const disabled = !email || !password;
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
-    const handleChangeEmail = (value: string) => {
-        dispatch(loginActions.setEmail(value));
-    }
-
-    const handleChangePassword = (value: string) => {
-        dispatch(loginActions.setPassword(value));
-    }
-
-    const handleRegister = async () => {
-        const result = await dispatch(loginByUsername({email, password}));
-        if (result.meta.requestStatus === "fulfilled") {
-            navigate(RoutePath.profile);
-        }
-    }
+    const {
+        values,
+        errors,
+        touched,
+        error,
+        isLoading,
+        handleChange,
+        handleSubmit,
+    } = useLoginForm();
 
     if (isLoading) {
         return (
@@ -45,7 +27,7 @@ export const LoginForm = () => {
     }
 
     return (
-        <div className={cls.loginForm}>
+        <form onSubmit={handleSubmit} className={cls.loginForm}>
             <Text 
                 className={cls.title} 
                 title="Авторизация" 
@@ -55,15 +37,25 @@ export const LoginForm = () => {
                 className={cls.input}
                 type="text"
                 placeholder={"Введите почту"}
-                onChange={handleChangeEmail}
-                value={email}
+                onChange={handleChange}
+                value={values.email}
+                hasError={!!(errors.email && touched.email)}
+                touched={touched.email}
+                errorText={errors.email}
+                name="email"
+                id="email"
             />
             <Input
                 className={cls.input}
                 type="password"
                 placeholder={"Введите пароль"}
-                onChange={handleChangePassword}
-                value={password}
+                onChange={handleChange}
+                value={values.password}
+                hasError={!!(errors.password && touched.password)}
+                touched={touched.password}
+                errorText={errors.password}
+                name="password"
+                id="password"
             />
             {error && (
                 <Text
@@ -73,15 +65,14 @@ export const LoginForm = () => {
                 />
             )}
             <Button
-                onClick={handleRegister}
+                type="submit"
                 className={cls.loginBtn}
-                disabled={disabled}
             >
-                Авторизоваться
+                    Авторизоваться
             </Button>
             <div className={cls.link}>
-                Еще не зарегестрированы? <AppLink to={"/register"}>Перейти к регистрации</AppLink>
+                Еще не зарегестрированы? <AppLink to={RoutePath.register}>Перейти к регистрации</AppLink>
             </div>
-        </div>
+        </form>
     );
 };

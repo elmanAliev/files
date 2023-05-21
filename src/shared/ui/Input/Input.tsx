@@ -9,22 +9,23 @@ type HTMLInputProps = Omit<InputHTMLAttributes<HTMLElement>, "value" | "onChange
 interface InputProps extends HTMLInputProps {
   className?: string;
   value?: string | number;
-  onChange?: (value: string) => void;
-  autoFocus?: boolean;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  hasError?: boolean;
+  touched?: boolean;
+  errorText?: string
 }
 
 export const Input = memo((props: InputProps) => {
     const {
         className,
         value,
-        onChange,
+        onChange: handleChange,
         type = "text",
+        hasError,
+        errorText,
+        touched,
         ...otherProps
     } = props;
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        onChange?.(e.target.value);
-    };
 
     return (
         <div className={classNames(cls.wrapper, {}, [className])}>
@@ -35,6 +36,7 @@ export const Input = memo((props: InputProps) => {
                 onChange={handleChange}
                 {...otherProps}
             />
+            {hasError ? <span className={cls.error}>{touched && errorText}</span> : null}
         </div>
     );
 });

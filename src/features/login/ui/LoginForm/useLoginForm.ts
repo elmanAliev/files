@@ -19,8 +19,8 @@ export const useLoginForm = () => {
     const navigate = useNavigate();
 
     // авторизация
-    const handleLogin = async ({ email, password }: HandleLoginProps) => {
-        const result = await dispatch(loginByUsername({email, password}));
+    const handleLogin = async (data: HandleLoginProps) => {
+        const result = await dispatch(loginByUsername(data));
 
         // если авторизация прошла успешно - переход на страницу профиля
         if (result.meta.requestStatus === "fulfilled") {

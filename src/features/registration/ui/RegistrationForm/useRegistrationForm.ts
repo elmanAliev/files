@@ -20,8 +20,8 @@ export const useRegistrationForm = () => {
     const navigate = useNavigate();
 
     // регистрация
-    const handleRegister = async ({ name, email, password }: HandleRegistrProps) => {
-        const result = await dispatch(register({name, email, password}));
+    const handleRegister = async (data: HandleRegistrProps) => {
+        const result = await dispatch(register(data));
         
         // если регистрация прошла успешно - переход на страницу авторизации
         if (result.meta.requestStatus === "fulfilled") {

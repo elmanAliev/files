@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from '@/app/providers/StoreProvider/config/StateSchema';
 import { File } from '../../types/FileSchema';
+import { notifyError } from '@/shared/helpers/toast';
 
 interface Response {
     status: string;
@@ -25,6 +26,7 @@ export const getFiles = createAsyncThunk<
                 
             return response.data.files;
         } catch (e) {
+            notifyError("Ошибка при получении списка файлов")
             return rejectWithValue("Ошибка при получении списка файлов");
         }
     },

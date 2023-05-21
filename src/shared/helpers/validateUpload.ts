@@ -1,3 +1,5 @@
+import { notifyWarn } from "./toast";
+
 export const validateUpload = (files: FileList, allFiles: number) => {
     const filesArray = Array.from(files);
 
@@ -10,14 +12,14 @@ export const validateUpload = (files: FileList, allFiles: number) => {
     }
 
     if (totalSize > maxSizeBytes) {
-        console.log("Превышен суммарный размер файлов");
+        notifyWarn("Превышен суммарный размер файлов");
         return false;
     }
 
     // Проверка на ограничение количества файлов
     const maxFileCount = 19 - allFiles;
     if (filesArray.length > maxFileCount) {
-        console.log("Превышено количество файлов");
+        notifyWarn("Превышено количество файлов");
         return false;
     }
 

@@ -31,6 +31,7 @@ export const loginByUsername = createAsyncThunk<
             
             localStorage.setItem(USER_LOCALSTORAGE_KEY, response.data.token);
             dispatch(userActions.setAuthData(response.data));
+
             return response.data;
         } catch (e) {
             return rejectWithValue("Ошибка при авторизации");

@@ -1,6 +1,7 @@
 import { createAsyncThunk} from "@reduxjs/toolkit";
 import { ThunkConfig } from "@/app/providers/StoreProvider/config/StateSchema";
 import { fileActions, getCurrentFile, getFiles } from "@/entities/File";
+import { notifyError, notifySuccess } from "@/shared/helpers/toast";
 
 interface Response {
     status: string;
@@ -24,10 +25,12 @@ export const deleteFile = createAsyncThunk<
             }
 
             dispatch(fileActions.togleToolbar(false));
-            dispatch(getFiles())
+            notifySuccess("Файл успешно удален");
+            dispatch(getFiles());
             
             return response.data;
         } catch (e) {
+            notifyError("Ошибка при удалении файла");
             return rejectWithValue("Ошибка при удалении файла");
         }
     },

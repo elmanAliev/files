@@ -2,6 +2,7 @@ import { createAsyncThunk} from "@reduxjs/toolkit";
 import { ThunkConfig } from "@/app/providers/StoreProvider/config/StateSchema";
 import { fileActions, getCurrentFile } from "@/entities/File";
 import { downloadFileHelper } from "@/shared/helpers/downloadFile";
+import { notifyError, notifySuccess } from "@/shared/helpers/toast";
 
 export const downloadFile = createAsyncThunk<
     Blob,
@@ -21,10 +22,12 @@ export const downloadFile = createAsyncThunk<
             }
 
             dispatch(fileActions.togleToolbar(false));
-            downloadFileHelper(response.data, file?.fileName)
-            
+            downloadFileHelper(response.data, file?.fileName);
+            notifySuccess("Файл успешно загружен");
+
             return response.data;
         } catch (e) {
+            notifyError("Ошибка при скачивании файла");
             return rejectWithValue("Ошибка при скачивании файла");
         }
     },

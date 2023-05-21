@@ -1,6 +1,7 @@
 import { createAsyncThunk} from "@reduxjs/toolkit";
 import { ThunkConfig } from "@/app/providers/StoreProvider/config/StateSchema";
 import { fileActions, getCurrentFile } from "@/entities/File";
+import { downloadFileHelper } from "@/shared/helpers/downloadFile";
 
 export const downloadFile = createAsyncThunk<
     Blob,
@@ -20,16 +21,7 @@ export const downloadFile = createAsyncThunk<
             }
 
             dispatch(fileActions.togleToolbar(false));
-
-            const blob = new Blob([response.data]);
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', file?.fileName || "new file");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url)
+            downloadFileHelper(response.data, file?.fileName)
             
             return response.data;
         } catch (e) {

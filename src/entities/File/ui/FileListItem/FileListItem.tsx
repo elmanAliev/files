@@ -1,9 +1,10 @@
 import cls from './FileListItem.module.scss';
 import { File } from "../../model/types/FileSchema";
 import DocumentIcon from '@/shared/assets/icons/DocumentIcon.svg';
+import ImageIcon from '@/shared/assets/icons/ImageIcon.svg';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch/useAppDispatch';
-import { fileActions } from '../..';
+import { fileActions } from '../../model/slices/fileSlice';
 
 interface FileListItemProps {
     file: File
@@ -21,8 +22,8 @@ export const FileListItem = ({file}: FileListItemProps) => {
     return (
         <div className={cls.fileListItem} onClick={handleOpenToolbar}>
             {imgType
-                ? <img
-                    src={file.url}
+                ? <Icon
+                    Svg={ImageIcon}
                     className={cls.img} 
                 />
                 : <Icon 

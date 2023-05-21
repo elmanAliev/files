@@ -4,7 +4,7 @@ import cls from './Icon.module.scss';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
     className?: string;
-    Svg: React.VFC<React.SVGProps<SVGSVGElement>>;
+    Svg: React.VFC<React.SVGProps<SVGSVGElement>> | string;
 }
 
 export const Icon = memo((props: IconProps) => {

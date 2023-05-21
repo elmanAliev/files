@@ -1,11 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { register } from '../services/register/register';
 import { RegisterSchema } from '../types/RegisterSchema';
 
 const initialState: RegisterSchema = {
-    name: "",
-    email: "",
-    password: "",
     error: "",
     isLoading: false,
 };
@@ -13,20 +10,7 @@ const initialState: RegisterSchema = {
 export const RegisterSlice = createSlice({
     name: 'register',
     initialState,
-    reducers: {
-        setName: (state, action: PayloadAction<string>) => {
-            state.name = action.payload;
-            state.error = "";
-        },
-        setEmail: (state, action: PayloadAction<string>) => {
-            state.email = action.payload;
-            state.error = "";
-        },
-        setPassword: (state, action: PayloadAction<string>) => {
-            state.password = action.payload;
-            state.error = "";
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(register.pending, (state) => {

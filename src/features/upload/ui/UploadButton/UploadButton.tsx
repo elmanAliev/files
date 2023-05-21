@@ -10,20 +10,16 @@ export const UploadButton = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
 
-    // отправка файлов на сервер
     const handleUpload = async ({ target }: ChangeEvent<HTMLInputElement>) => {
         if (target.files) {
             const result = await dispatch(uploadFile({filesArray: target.files}));
 
-            // очищаем input, т.к. если файл, выбранный в предыдущий раз, 
-            // идентичен файлу, выбранному в текущий раз, onChange на input не сработает
             if (result.meta.requestStatus === "fulfilled" && fileInputRef.current) {
                 fileInputRef.current.value = '';
             }
         }
     };
 
-    // имитируем клик на input
     const handleButtonClick = () => {
         if(fileInputRef.current) {
             fileInputRef.current.click();
@@ -37,6 +33,7 @@ export const UploadButton = () => {
                 type="file"
                 ref={fileInputRef}
                 onChange={handleUpload}
+                multiple
             />
             <Button onClick={handleButtonClick}>Загрузить</Button>
             <Text text={text} />

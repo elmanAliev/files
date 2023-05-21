@@ -21,8 +21,7 @@ export const downloadFile = createAsyncThunk<
 
             dispatch(fileActions.togleToolbar(false));
 
-
-            const blob = new Blob([response.data], { type: file?.mimeType });
+            const blob = new Blob([response.data]);
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;

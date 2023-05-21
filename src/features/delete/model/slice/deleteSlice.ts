@@ -8,7 +8,7 @@ const initialState: DeleteSchema = {
 };
 
 export const deleteSlice = createSlice({
-    name: 'upload',
+    name: 'delete',
     initialState,
     reducers: {},
     extraReducers: (builder) => {

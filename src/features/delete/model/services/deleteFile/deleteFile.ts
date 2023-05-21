@@ -24,8 +24,11 @@ export const deleteFile = createAsyncThunk<
                 throw new Error();
             }
 
+            // закрываем toolbar
             dispatch(fileActions.togleToolbar(false));
             notifySuccess("Файл успешно удален");
+
+            // обновляем список файлов
             dispatch(getFiles());
             
             return response.data;

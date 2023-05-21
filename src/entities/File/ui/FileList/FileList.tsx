@@ -15,10 +15,12 @@ export const FileList = () => {
     const isOpen = useSelector(getToolbarState);
     const dispatch = useAppDispatch();
 
+    // закрываем toolbar
     const handleCloseToolbar = () => {
         dispatch(fileActions.togleToolbar(false))
     }
 
+    // при рендере компонента, делаем запрос на получение списка файлов
     useEffect(() => {
         dispatch(getFiles());
     }, [dispatch]);

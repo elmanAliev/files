@@ -1,5 +1,6 @@
 export type Mods = Record<string, boolean | string | undefined>;
 
+// функция для присвоения элементу необходимых className
 export function classNames(
     cls: string,
     mods: Mods = {},

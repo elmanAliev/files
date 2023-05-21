@@ -23,8 +23,12 @@ export const downloadFile = createAsyncThunk<
                 throw new Error();
             }
 
+            // закрываем toolbar
             dispatch(fileActions.togleToolbar(false));
+
+            // скачиваем полученный файл
             downloadFileHelper(response.data, file?.fileName);
+            
             notifySuccess("Файл успешно загружен");
 
             return response.data;

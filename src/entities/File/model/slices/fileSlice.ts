@@ -7,6 +7,7 @@ const fileAdapter = createEntityAdapter<File>({
     selectId: (file) => file.id,
 });
 
+// селектор для получения списка файлов
 export const getFilesData = fileAdapter.getSelectors<StateSchema>(
     (state) => state.file || fileAdapter.getInitialState(),
 );

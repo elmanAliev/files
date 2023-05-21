@@ -14,20 +14,26 @@ export const UploadButton = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
 
+    // загрузка файлов на сервер
     const handleUpload = async ({ target }: ChangeEvent<HTMLInputElement>) => {
         if (target.files) {
+            // проверка файлов на количество и размер
             if (!validateUpload(target.files, allFiles.length)) {
                 return
             }
             
             const result = await dispatch(uploadFile({filesArray: target.files}));
 
+            // если загрузка прошла успешно - очищаем инпут,
+            // так как браузер не даст загрузить тот же самый файл второй раз подряд.
             if (result.meta.requestStatus === "fulfilled" && fileInputRef.current) {
                 fileInputRef.current.value = '';
             }
         }
     };
 
+    // так как input имеет свойство "display:none",
+    // при клике на кнопку имитируем клик по инпуту
     const handleButtonClick = () => {
         if(fileInputRef.current) {
             fileInputRef.current.click();

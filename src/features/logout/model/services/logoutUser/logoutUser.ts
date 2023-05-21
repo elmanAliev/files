@@ -22,6 +22,8 @@ export const logoutUser = createAsyncThunk<
                 throw new Error();
             }
 
+            // удаляем token и устанавливаем authData = undefined, 
+            // для того чтобы страница профиля была недоступна
             dispatch(userActions.logout());
             
             return response.data;

@@ -29,7 +29,11 @@ export const loginByUsername = createAsyncThunk<
                 throw new Error();
             }
             
+            // записываем token в localStorage 
             localStorage.setItem(USER_LOCALSTORAGE_KEY, response.data.token);
+
+            // пользователь авторизовался - указываем это в authData,
+            // чтобы страница профиля стала доступна
             dispatch(userActions.setAuthData(response.data));
 
             return response.data;

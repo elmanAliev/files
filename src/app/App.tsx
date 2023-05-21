@@ -9,6 +9,7 @@ function App() {
     const dispatch = useAppDispatch();
     const inited = useSelector(getUserInited);
 
+    // проверяем, авторизован ли пользователь
     useEffect(() => {
         dispatch(userActions.initAuthData());
     }, [dispatch]);

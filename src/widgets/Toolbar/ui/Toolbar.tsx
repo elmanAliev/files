@@ -13,6 +13,7 @@ interface ToolbarProps {
 
 export const Toolbar = memo(({isOpen, onClose: handleClose}: ToolbarProps) => {
     const mods: Record<string, boolean> = {
+        // если isOpen = true, задаем класс "opened"
         [cls.opened]: isOpen,
     };
 

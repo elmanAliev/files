@@ -5,6 +5,7 @@ const initialValues = {
     password: "",
 };
 
+// схема валидации полей ввода в форме авторизации
 const validationSchema = Yup.object().shape({
     email: Yup.string()
         .email("Введите действительный адрес электронной почты")

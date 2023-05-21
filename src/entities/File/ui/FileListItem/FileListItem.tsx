@@ -11,9 +11,13 @@ interface FileListItemProps {
 }
 
 export const FileListItem = ({file}: FileListItemProps) => {
-    const imgType = file.mimeType.includes("image");
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
+    // проверка на то, что файл является изображением
+    const imgType = file.mimeType.includes("image");
+
+    // при клике на файл открываем toolbar,
+    // и устанавливаем в поле сurrentFile - текущий файл
     const handleOpenToolbar = () => {
         dispatch(fileActions.setCurrentFile(file))
         dispatch(fileActions.togleToolbar(true))

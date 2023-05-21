@@ -18,13 +18,17 @@ export const useLoginForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    // авторизация
     const handleLogin = async ({ email, password }: HandleLoginProps) => {
         const result = await dispatch(loginByUsername({email, password}));
+
+        // если авторизация прошла успешно - переход на страницу профиля
         if (result.meta.requestStatus === "fulfilled") {
             navigate(RoutePath.profile);
         }
     }
 
+    // используется библиотека formik для валидации полей ввода
     const formik = useFormik({
         initialValues,
         validationSchema,

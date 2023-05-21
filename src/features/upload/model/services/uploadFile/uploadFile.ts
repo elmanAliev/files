@@ -34,6 +34,8 @@ export const uploadFile = createAsyncThunk<
             }
 
             notifySuccess("Файлы успешно загружены на сервер");
+
+            // обновляем список файлов, чтобы новые загруженные файлы отобразились
             dispatch(getFiles())
             
             return response.data;

@@ -19,17 +19,21 @@ export const useRegistrationForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const handleLogin = async ({ name, email, password }: HandleRegistrProps) => {
+    // регистрация
+    const handleRegister = async ({ name, email, password }: HandleRegistrProps) => {
         const result = await dispatch(register({name, email, password}));
+        
+        // если регистрация прошла успешно - переход на страницу авторизации
         if (result.meta.requestStatus === "fulfilled") {
             navigate(RoutePath.login);
         }
     }
 
+    // используется библиотека formik для валидации полей ввода
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: handleLogin,
+        onSubmit: handleRegister,
     });
     
     const { values, errors, touched, handleChange, handleSubmit } = formik;

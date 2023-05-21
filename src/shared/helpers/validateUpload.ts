@@ -18,6 +18,7 @@ export const validateUpload = (files: FileList, allFiles: number) => {
 
     // Проверка на ограничение количества файлов
     const maxFileCount = 19 - allFiles;
+    
     if (filesArray.length > maxFileCount) {
         notifyWarn("Превышено количество файлов");
         return false;

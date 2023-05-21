@@ -5,6 +5,7 @@ const $api = axios.create({
     baseURL: "https://job.kitactive.ru/api",
 });
 
+// добавляем token к запросу
 $api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem(USER_LOCALSTORAGE_KEY)

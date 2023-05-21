@@ -9,8 +9,11 @@ export const LogoutButton = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch();
 
+    // разавторизация
     const handleLogout = async () => {
         const result = await dispatch(logoutUser());
+
+        // если разавторизация прошла успешно - переход на страницу авторизации
         if (result.meta.requestStatus === "fulfilled") {
             navigate(RoutePath.login);
         }

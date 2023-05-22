@@ -5,12 +5,13 @@ import ImageIcon from '@/shared/assets/icons/ImageIcon.svg';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch/useAppDispatch';
 import { fileActions } from '../../model/slices/fileSlice';
+import { memo } from 'react';
 
 interface FileListItemProps {
     file: File
 }
 
-export const FileListItem = ({file}: FileListItemProps) => {
+export const FileListItem = memo(({file}: FileListItemProps) => {
     const dispatch = useAppDispatch();
 
     // проверка на то, что файл является изображением
@@ -38,4 +39,4 @@ export const FileListItem = ({file}: FileListItemProps) => {
             <p className={cls.text}>{file.name}</p>
         </div>
     );
-};
+});
